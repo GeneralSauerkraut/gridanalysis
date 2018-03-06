@@ -95,6 +95,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TPRibs.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -118,7 +119,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(449, 376);
+            this.tabControl1.Size = new System.Drawing.Size(449, 359);
             this.tabControl1.TabIndex = 0;
             // 
             // TPRibs
@@ -291,13 +292,14 @@
             this.TPOver.Controls.Add(this.label6);
             this.TPOver.Location = new System.Drawing.Point(4, 22);
             this.TPOver.Name = "TPOver";
-            this.TPOver.Size = new System.Drawing.Size(441, 350);
+            this.TPOver.Size = new System.Drawing.Size(441, 333);
             this.TPOver.TabIndex = 4;
             this.TPOver.Text = "Overview";
             this.TPOver.UseVisualStyleBackColor = true;
             // 
             // TPAnal
             // 
+            this.TPAnal.Controls.Add(this.button8);
             this.TPAnal.Controls.Add(this.button6);
             this.TPAnal.Controls.Add(this.button5);
             this.TPAnal.Controls.Add(this.button4);
@@ -309,7 +311,7 @@
             this.TPAnal.Controls.Add(this.label27);
             this.TPAnal.Location = new System.Drawing.Point(4, 22);
             this.TPAnal.Name = "TPAnal";
-            this.TPAnal.Size = new System.Drawing.Size(441, 350);
+            this.TPAnal.Size = new System.Drawing.Size(441, 333);
             this.TPAnal.TabIndex = 3;
             this.TPAnal.Text = "Analysis";
             this.TPAnal.UseVisualStyleBackColor = true;
@@ -761,19 +763,29 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(115, 431);
+            this.button7.Location = new System.Drawing.Point(14, 294);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(334, 79);
+            this.button7.Size = new System.Drawing.Size(334, 33);
             this.button7.TabIndex = 12;
             this.button7.Text = "Reset";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(303, 45);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(113, 180);
+            this.button8.TabIndex = 9;
+            this.button8.Text = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 400);
+            this.ClientSize = new System.Drawing.Size(473, 376);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -871,6 +883,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }
 

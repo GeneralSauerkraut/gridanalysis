@@ -58,7 +58,7 @@ namespace gridanalysis
         private int[,] designguide;
 
         //Material specific Properties
-        private static int e_modulus = 72400*10^6; //MPa
+        private static int e_modulus = 7240*10^6; //MPa
         private static double thickness = 0.8; //mm
         #endregion
 
@@ -170,7 +170,7 @@ namespace gridanalysis
                  * if the index is higher or equal to 1269 the previous amount of stringers
                  * If there is a rib present it will be later filled by the value of its right
                  * </remarks>*/
-                if (i < 1269)
+                if (i < 1260)
                 {
                     int counter = 0;
                     for (int j = 0; j < walls.GetLength(0); j++)
@@ -308,10 +308,6 @@ namespace gridanalysis
             ab = GetAB();
             kc = GetKc();
             sigma_buckling = GetSigmaBuckle();
-            //interpolation
-            //ab = Interpolatedsmoothing(ab);
-            //kc = Interpolatedsmoothing(kc);
-            //sigma_buckling = Interpolatedsmoothing(sigma_buckling);
 
             //right tree
             Inertia = GetInertia();
@@ -319,12 +315,6 @@ namespace gridanalysis
             Sigma_compression = GetStress(force);
             Sfactor = GetSfactor();
             designguide = GetDesignGuide();
-
-            //truncation
-            sigma_buckling = TruncateData(sigma_buckling);
-            Sigma_compression = TruncateData(Sigma_compression);
-            Sfactor = TruncateData(Sfactor);
-            designguide = TruncateData(designguide);
         }
         #endregion
 
@@ -418,7 +408,7 @@ namespace gridanalysis
                 }
             }
 
-            return TruncateData(data);
+            return data;
         }
 
         private double[,] GetInertia()
@@ -462,7 +452,10 @@ namespace gridanalysis
                 for (int j = 0; j < data.GetLength(1); j++)
                 {
                     data[i, j] = force * j / 1000 * offset_from_neutral_axis[i, j] / Inertia[i, j]*Math.Pow(10,-6);
-                    if (j > 1268) data[i, j] *= 3 / 4;
+                    if(j>1269)
+                    {
+                        data[i, j] = data[i, j] * 4 / 3;
+                    }
                 }
             }
 
@@ -484,6 +477,11 @@ namespace gridanalysis
                     else
                     {
                         data[i, j] = 0;
+                    }
+
+                    if(data[i,j]>4)
+                    {
+                        data[i, j] = 4;
                     }
                 }
             }
@@ -661,7 +659,7 @@ namespace gridanalysis
                 for (int j = 1266; j < data.GetLength(1); j++)
                 {
                     if (walls[i, j])
-                        data[i, j] = 0;
+                        data[i, j] = -1;
                 }
             }
             return data;
@@ -690,22 +688,22 @@ namespace gridanalysis
 
         public double[,] ReturnBckling()
         {
-            return sigma_buckling;
+            return TruncateData(sigma_buckling);
         }
 
         public double[,] ReturnStress()
         {
-            return Sigma_compression;
+            return TruncateData(Sigma_compression);
         }
 
         public double[,] ReturnSfactor()
         {
-            return Sfactor;
+            return TruncateData(Sfactor);
         }
 
         public int[,] ReturnDesignGuide()
         {
-            return designguide;
+            return TruncateData(designguide);
         }
 
         public int[,] ReturnWalls()
@@ -717,6 +715,11 @@ namespace gridanalysis
                     data[i, j] = Convert.ToInt32(walls[i, j]);
 
             return data;
+        }
+
+        public double[,] ReturnDebug()
+        {
+            return Sigma_compression;
         }
         #endregion
     }
