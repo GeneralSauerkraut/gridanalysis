@@ -9,6 +9,7 @@ namespace gridanalysis
     class AnalysisRefactored
     {
         //TODO: Add a Logfile output
+        //TODO: Add dumping functions
         /**<summary>
          * Author: Malte Wegener
          * 
@@ -183,7 +184,7 @@ namespace gridanalysis
                     n_of_topstringers[i] = n_of_topstringers[i - 1];
             }
 
-            for (int i = 0; i<n_of_topstringers.Length; i++)
+            for (int i = 0; i<n_of_topstringers.Length-1; i++)
             {
                 if (n_of_topstringers[i] == 0)
                     n_of_topstringers[i] = n_of_topstringers[i + 1];
