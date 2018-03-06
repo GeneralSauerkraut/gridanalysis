@@ -32,6 +32,8 @@ namespace gridanalysis
             CBRibs.Items.Clear();
             CbRibStr1.Items.Clear();
             CbRibStr2.Items.Clear();
+            CBStrBotAdd1.Items.Clear();
+            CBStrBotAdd2.Items.Clear();
 
             foreach (int item in Analysis.ReturnRibs())
             { 
@@ -40,6 +42,8 @@ namespace gridanalysis
                 CBRibs.Items.Add(Convert.ToString(item));
                 CbRibStr1.Items.Add(Convert.ToString(item));
                 CbRibStr2.Items.Add(Convert.ToString(item));
+                CBStrBotAdd1.Items.Add(Convert.ToString(item));
+                CBStrBotAdd2.Items.Add(Convert.ToString(item));
             }
         }
 
@@ -59,6 +63,7 @@ namespace gridanalysis
         {
             LVStrTopOver.Items.Clear();
             LVStrTop.Items.Clear();
+            CBStrTopRemove.Items.Clear();
 
             foreach (Stringer item in Analysis.ReturnTopStringers())
             {
@@ -66,7 +71,78 @@ namespace gridanalysis
 
                 LVStrTop.Items.Add(str);
                 LVStrTopOver.Items.Add(str);
+                CBStrTopRemove.Items.Add(str);
             }
+        }
+
+        private void BtStrTopRemove_Click(object sender, EventArgs e)
+        {
+            String strtemp = CBStrTopRemove.Text;
+            strtemp.Replace(" ", String.Empty);
+            string[] words = strtemp.Split(',');
+
+            int[] data = new int[3];
+            for (int i = 0; i < data.Length; i++)
+                data[i] = Convert.ToInt32(words[i]);
+
+            Analysis.RemoveTopStringer(100, 0, 1500);
+
+            UpdateTopStr();
+        }
+
+        private void BtStrBotAdd_Click(object sender, EventArgs e)
+        {
+            Analysis.AddBotStringer(Convert.ToInt32(CBStrBotAdd1.Text), Convert.ToInt32(CBStrBotAdd2.Text));
+            UpdateStrBot();
+        }
+
+        private void UpdateStrBot()
+        {
+            LVStrBot.Items.Clear();
+            LVStrBotOver.Items.Clear();
+
+            foreach (Stringer item in Analysis.ReturnBotStringers())
+            {
+                string str = Convert.ToString(item.start) + ", " + Convert.ToString(item.end);
+
+                LVStrBot.Items.Add(str);
+                LVStrBotOver.Items.Add(str);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Analysis.Calculate(Convert.ToInt32(TbForce.Text));
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Analysis = new AnalysisRefactored();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnStress(), "stress");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnBckling(), "bckl");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnSfactor(), "sfactor");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnDesignGuide(), "design");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
         }
     }
 }

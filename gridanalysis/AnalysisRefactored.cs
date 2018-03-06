@@ -58,7 +58,7 @@ namespace gridanalysis
         private int[,] designguide;
 
         //Material specific Properties
-        private static int e_modulus = 72400; //MPa
+        private static int e_modulus = 72400*10^6; //MPa
         private static double thickness = 0.8; //mm
         #endregion
 
@@ -309,9 +309,9 @@ namespace gridanalysis
             kc = GetKc();
             sigma_buckling = GetSigmaBuckle();
             //interpolation
-            ab = Interpolatedsmoothing(ab);
-            kc = Interpolatedsmoothing(kc);
-            sigma_buckling = Interpolatedsmoothing(sigma_buckling);
+            //ab = Interpolatedsmoothing(ab);
+            //kc = Interpolatedsmoothing(kc);
+            //sigma_buckling = Interpolatedsmoothing(sigma_buckling);
 
             //right tree
             Inertia = GetInertia();
@@ -353,14 +353,12 @@ namespace gridanalysis
             {
                 for(int j = 0; j < data.GetLength(1); j++)
                 {
-                    if (j > 1268)
+                    if (j > 1260)
                         data[i, j] = data[i, j - 1];
-                    if (i == 0 || i == sizey || j == 0 || j > 1269 + i * Math.Tan(Math.PI / 6))
-                        data[i, j] = 0;
                 }
             }
 
-            return data;
+            return TruncateData(data);
         }
 
         private double[,] GetKc()
@@ -382,7 +380,14 @@ namespace gridanalysis
                 }
             }
 
-            return data;
+            /**<remarks>
+             * The obtained data is pretty but not very useful
+             * Due to the slanted nature of the Wingbox we use the value left of the 
+             * elemnt if we are in the slanted part.
+             * We also set the truncated part and all "walls" of the wingbox to 0
+             * </remarks>*/
+
+            return TruncateData(data);
         }
 
         private double[,] GetSigmaBuckle()
@@ -404,7 +409,16 @@ namespace gridanalysis
                 }
             }
 
-            return data;
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (j > 1260)
+                        data[i, j] = data[i, j - 1];
+                }
+            }
+
+            return TruncateData(data);
         }
 
         private double[,] GetInertia()
@@ -447,7 +461,7 @@ namespace gridanalysis
             {
                 for (int j = 0; j < data.GetLength(1); j++)
                 {
-                    data[i, j] = force * j / 1000 * offset_from_neutral_axis[i, j] / Inertia[i, j];
+                    data[i, j] = force * j / 1000 * offset_from_neutral_axis[i, j] / Inertia[i, j]*Math.Pow(10,-6);
                     if (j > 1268) data[i, j] *= 3 / 4;
                 }
             }
@@ -589,16 +603,16 @@ namespace gridanalysis
                          * </remarks>*/
                         double[] tmp = new double[] { 0, 0, 0, 0 };
 
-                        if (i - 1 < data.GetLength(0) && j + 1 < data.GetLength(1))
+                        if (i - 1 < data.GetLength(0) && j + 1 < data.GetLength(1) && i - 1 >= 0 && j + 1 >= 0)
                             tmp[0] = data[i - 1, j + 1];
 
-                        if (i - 1 < data.GetLength(0) && j - 1 < data.GetLength(1))
+                        if (i - 1 < data.GetLength(0) && j - 1 < data.GetLength(1) && i - 1 >= 0 && j - 1 >= 0)
                             tmp[1] = data[i - 1, j - 1];
 
-                        if (i + 1 < data.GetLength(0) && j - 1 < data.GetLength(1))
+                        if (i + 1 < data.GetLength(0) && j - 1 < data.GetLength(1) && i + 1 >= 0 && j - 1 >= 0)
                             tmp[2] = data[i + 1, j - 1];
 
-                        if (i + 1 < data.GetLength(0) && j + 1 < data.GetLength(1))
+                        if (i + 1 < data.GetLength(0) && j + 1 < data.GetLength(1) && i + 1 >= 0 && j + 1 >= 0)
                             tmp[3] = data[i + 1, j + 1];
 
                         double sum = 0;
@@ -630,7 +644,7 @@ namespace gridanalysis
             {
                 for(int j = 0; j<data.GetLength(1);j++)
                 {
-                    if (j > 1269 + i * Math.Tan(Math.PI / 6))
+                    if (walls[i, j])
                         data[i, j] = 0;
                 }
             }
@@ -644,9 +658,9 @@ namespace gridanalysis
              * </summary>*/
             for (int i = 0; i < data.GetLength(0); i++)
             {
-                for (int j = 0; j < data.GetLength(1); j++)
+                for (int j = 1266; j < data.GetLength(1); j++)
                 {
-                    if (j > 1269 + i * Math.Tan(Math.PI / 6))
+                    if (walls[i, j])
                         data[i, j] = 0;
                 }
             }
@@ -674,6 +688,36 @@ namespace gridanalysis
             return botstringers;
         }
 
+        public double[,] ReturnBckling()
+        {
+            return sigma_buckling;
+        }
+
+        public double[,] ReturnStress()
+        {
+            return Sigma_compression;
+        }
+
+        public double[,] ReturnSfactor()
+        {
+            return Sfactor;
+        }
+
+        public int[,] ReturnDesignGuide()
+        {
+            return designguide;
+        }
+
+        public int[,] ReturnWalls()
+        {
+            int[,] data = new int[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+                for (int j = 0; j < data.GetLength(1); j++)
+                    data[i, j] = Convert.ToInt32(walls[i, j]);
+
+            return data;
+        }
         #endregion
     }
 }

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Analysis.cs" />
     <Compile Include="AnalysisRefactored.cs" />
+    <Compile Include="ArrayDumper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

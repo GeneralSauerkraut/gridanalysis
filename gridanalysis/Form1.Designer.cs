@@ -72,14 +72,40 @@
             this.CBStrTopRemove = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.BtStrBotAdd = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.CBStrBotAdd2 = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.CBStrBotAdd1 = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.LVStrBot = new System.Windows.Forms.ListView();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.TbForce = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TPRibs.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.TPTop.SuspendLayout();
+            this.TPBot.SuspendLayout();
             this.TPOver.SuspendLayout();
+            this.TPAnal.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -92,7 +118,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(644, 560);
+            this.tabControl1.Size = new System.Drawing.Size(449, 376);
             this.tabControl1.TabIndex = 0;
             // 
             // TPRibs
@@ -103,7 +129,7 @@
             this.TPRibs.Controls.Add(this.LVRibs);
             this.TPRibs.Location = new System.Drawing.Point(4, 22);
             this.TPRibs.Name = "TPRibs";
-            this.TPRibs.Size = new System.Drawing.Size(636, 534);
+            this.TPRibs.Size = new System.Drawing.Size(441, 350);
             this.TPRibs.TabIndex = 0;
             this.TPRibs.Text = "Ribs";
             this.TPRibs.UseVisualStyleBackColor = true;
@@ -220,7 +246,7 @@
             this.LVRibs.GridLines = true;
             this.LVRibs.Location = new System.Drawing.Point(315, 36);
             this.LVRibs.Name = "LVRibs";
-            this.LVRibs.Size = new System.Drawing.Size(226, 482);
+            this.LVRibs.Size = new System.Drawing.Size(86, 214);
             this.LVRibs.TabIndex = 0;
             this.LVRibs.UseCompatibleStateImageBehavior = false;
             this.LVRibs.View = System.Windows.Forms.View.List;
@@ -234,22 +260,29 @@
             this.TPTop.Controls.Add(this.LVStrTop);
             this.TPTop.Location = new System.Drawing.Point(4, 22);
             this.TPTop.Name = "TPTop";
-            this.TPTop.Size = new System.Drawing.Size(636, 534);
+            this.TPTop.Size = new System.Drawing.Size(441, 350);
             this.TPTop.TabIndex = 1;
             this.TPTop.Text = "Stringers Top";
             this.TPTop.UseVisualStyleBackColor = true;
             // 
             // TPBot
             // 
+            this.TPBot.Controls.Add(this.label23);
+            this.TPBot.Controls.Add(this.label24);
+            this.TPBot.Controls.Add(this.LVStrBot);
+            this.TPBot.Controls.Add(this.groupBox5);
             this.TPBot.Location = new System.Drawing.Point(4, 22);
             this.TPBot.Name = "TPBot";
-            this.TPBot.Size = new System.Drawing.Size(636, 534);
+            this.TPBot.Size = new System.Drawing.Size(441, 350);
             this.TPBot.TabIndex = 2;
             this.TPBot.Text = "Stringers Bot";
             this.TPBot.UseVisualStyleBackColor = true;
             // 
             // TPOver
             // 
+            this.TPOver.Controls.Add(this.button7);
+            this.TPOver.Controls.Add(this.label26);
+            this.TPOver.Controls.Add(this.label25);
             this.TPOver.Controls.Add(this.LVStrBotOver);
             this.TPOver.Controls.Add(this.label8);
             this.TPOver.Controls.Add(this.LVStrTopOver);
@@ -258,16 +291,25 @@
             this.TPOver.Controls.Add(this.label6);
             this.TPOver.Location = new System.Drawing.Point(4, 22);
             this.TPOver.Name = "TPOver";
-            this.TPOver.Size = new System.Drawing.Size(636, 534);
+            this.TPOver.Size = new System.Drawing.Size(441, 350);
             this.TPOver.TabIndex = 4;
             this.TPOver.Text = "Overview";
             this.TPOver.UseVisualStyleBackColor = true;
             // 
             // TPAnal
             // 
+            this.TPAnal.Controls.Add(this.button6);
+            this.TPAnal.Controls.Add(this.button5);
+            this.TPAnal.Controls.Add(this.button4);
+            this.TPAnal.Controls.Add(this.button3);
+            this.TPAnal.Controls.Add(this.button2);
+            this.TPAnal.Controls.Add(this.button1);
+            this.TPAnal.Controls.Add(this.label28);
+            this.TPAnal.Controls.Add(this.TbForce);
+            this.TPAnal.Controls.Add(this.label27);
             this.TPAnal.Location = new System.Drawing.Point(4, 22);
             this.TPAnal.Name = "TPAnal";
-            this.TPAnal.Size = new System.Drawing.Size(636, 534);
+            this.TPAnal.Size = new System.Drawing.Size(441, 350);
             this.TPAnal.TabIndex = 3;
             this.TPAnal.Text = "Analysis";
             this.TPAnal.UseVisualStyleBackColor = true;
@@ -285,16 +327,16 @@
             // 
             this.LVRibsOver.Location = new System.Drawing.Point(14, 56);
             this.LVRibsOver.Name = "LVRibsOver";
-            this.LVRibsOver.Size = new System.Drawing.Size(66, 302);
+            this.LVRibsOver.Size = new System.Drawing.Size(66, 232);
             this.LVRibsOver.TabIndex = 1;
             this.LVRibsOver.UseCompatibleStateImageBehavior = false;
             this.LVRibsOver.View = System.Windows.Forms.View.List;
             // 
             // LVStrTopOver
             // 
-            this.LVStrTopOver.Location = new System.Drawing.Point(201, 56);
+            this.LVStrTopOver.Location = new System.Drawing.Point(106, 56);
             this.LVStrTopOver.Name = "LVStrTopOver";
-            this.LVStrTopOver.Size = new System.Drawing.Size(142, 302);
+            this.LVStrTopOver.Size = new System.Drawing.Size(142, 232);
             this.LVStrTopOver.TabIndex = 3;
             this.LVStrTopOver.UseCompatibleStateImageBehavior = false;
             this.LVStrTopOver.View = System.Windows.Forms.View.List;
@@ -302,7 +344,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(231, 40);
+            this.label7.Location = new System.Drawing.Point(103, 17);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 13);
             this.label7.TabIndex = 2;
@@ -310,9 +352,9 @@
             // 
             // LVStrBotOver
             // 
-            this.LVStrBotOver.Location = new System.Drawing.Point(416, 56);
+            this.LVStrBotOver.Location = new System.Drawing.Point(266, 56);
             this.LVStrBotOver.Name = "LVStrBotOver";
-            this.LVStrBotOver.Size = new System.Drawing.Size(161, 302);
+            this.LVStrBotOver.Size = new System.Drawing.Size(151, 232);
             this.LVStrBotOver.TabIndex = 5;
             this.LVStrBotOver.UseCompatibleStateImageBehavior = false;
             this.LVStrBotOver.View = System.Windows.Forms.View.List;
@@ -320,7 +362,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(462, 40);
+            this.label8.Location = new System.Drawing.Point(263, 17);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 13);
             this.label8.TabIndex = 4;
@@ -328,9 +370,9 @@
             // 
             // LVStrTop
             // 
-            this.LVStrTop.Location = new System.Drawing.Point(434, 73);
+            this.LVStrTop.Location = new System.Drawing.Point(296, 51);
             this.LVStrTop.Name = "LVStrTop";
-            this.LVStrTop.Size = new System.Drawing.Size(142, 302);
+            this.LVStrTop.Size = new System.Drawing.Size(132, 275);
             this.LVStrTop.TabIndex = 4;
             this.LVStrTop.UseCompatibleStateImageBehavior = false;
             this.LVStrTop.View = System.Windows.Forms.View.List;
@@ -369,6 +411,7 @@
             this.TBStrTopVert.Name = "TBStrTopVert";
             this.TBStrTopVert.Size = new System.Drawing.Size(84, 20);
             this.TBStrTopVert.TabIndex = 1;
+            this.TBStrTopVert.Text = "200";
             // 
             // label10
             // 
@@ -444,7 +487,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(431, 35);
+            this.label15.Location = new System.Drawing.Point(293, 11);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(48, 13);
             this.label15.TabIndex = 6;
@@ -453,7 +496,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(431, 57);
+            this.label16.Location = new System.Drawing.Point(293, 33);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(135, 13);
             this.label16.TabIndex = 7;
@@ -480,6 +523,7 @@
             this.BtStrTopRemove.TabIndex = 9;
             this.BtStrTopRemove.Text = "Remove Stringer";
             this.BtStrTopRemove.UseVisualStyleBackColor = true;
+            this.BtStrTopRemove.Click += new System.EventHandler(this.BtStrTopRemove_Click);
             // 
             // CBStrTopRemove
             // 
@@ -507,11 +551,229 @@
             this.label17.TabIndex = 10;
             this.label17.Text = "Vertical Position, Start, End";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.BtStrBotAdd);
+            this.groupBox5.Controls.Add(this.label19);
+            this.groupBox5.Controls.Add(this.CBStrBotAdd2);
+            this.groupBox5.Controls.Add(this.label20);
+            this.groupBox5.Controls.Add(this.label21);
+            this.groupBox5.Controls.Add(this.CBStrBotAdd1);
+            this.groupBox5.Controls.Add(this.label22);
+            this.groupBox5.Location = new System.Drawing.Point(18, 22);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(248, 136);
+            this.groupBox5.TabIndex = 6;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Add Stringer";
+            // 
+            // BtStrBotAdd
+            // 
+            this.BtStrBotAdd.Location = new System.Drawing.Point(9, 90);
+            this.BtStrBotAdd.Name = "BtStrBotAdd";
+            this.BtStrBotAdd.Size = new System.Drawing.Size(226, 35);
+            this.BtStrBotAdd.TabIndex = 9;
+            this.BtStrBotAdd.Text = "Add Stringer";
+            this.BtStrBotAdd.UseVisualStyleBackColor = true;
+            this.BtStrBotAdd.Click += new System.EventHandler(this.BtStrBotAdd_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(212, 60);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(23, 13);
+            this.label19.TabIndex = 8;
+            this.label19.Text = "mm";
+            // 
+            // CBStrBotAdd2
+            // 
+            this.CBStrBotAdd2.FormattingEnabled = true;
+            this.CBStrBotAdd2.Location = new System.Drawing.Point(122, 52);
+            this.CBStrBotAdd2.Name = "CBStrBotAdd2";
+            this.CBStrBotAdd2.Size = new System.Drawing.Size(84, 21);
+            this.CBStrBotAdd2.TabIndex = 7;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 60);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 13);
+            this.label20.TabIndex = 6;
+            this.label20.Text = "Ending Rib";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(212, 28);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(23, 13);
+            this.label21.TabIndex = 5;
+            this.label21.Text = "mm";
+            // 
+            // CBStrBotAdd1
+            // 
+            this.CBStrBotAdd1.FormattingEnabled = true;
+            this.CBStrBotAdd1.Location = new System.Drawing.Point(122, 20);
+            this.CBStrBotAdd1.Name = "CBStrBotAdd1";
+            this.CBStrBotAdd1.Size = new System.Drawing.Size(84, 21);
+            this.CBStrBotAdd1.TabIndex = 4;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 28);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(62, 13);
+            this.label22.TabIndex = 3;
+            this.label22.Text = "Starting Rib";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(285, 42);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(54, 13);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "Start, End";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(285, 20);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(48, 13);
+            this.label24.TabIndex = 9;
+            this.label24.Text = "Stringers";
+            // 
+            // LVStrBot
+            // 
+            this.LVStrBot.Location = new System.Drawing.Point(288, 58);
+            this.LVStrBot.Name = "LVStrBot";
+            this.LVStrBot.Size = new System.Drawing.Size(139, 260);
+            this.LVStrBot.TabIndex = 8;
+            this.LVStrBot.UseCompatibleStateImageBehavior = false;
+            this.LVStrBot.View = System.Windows.Forms.View.List;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(103, 40);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(135, 13);
+            this.label25.TabIndex = 8;
+            this.label25.Text = "Vertical Position, Start, End";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(263, 40);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(54, 13);
+            this.label26.TabIndex = 11;
+            this.label26.Text = "Start, End";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(23, 31);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(34, 13);
+            this.label27.TabIndex = 0;
+            this.label27.Text = "Force";
+            // 
+            // TbForce
+            // 
+            this.TbForce.Location = new System.Drawing.Point(63, 28);
+            this.TbForce.Name = "TbForce";
+            this.TbForce.Size = new System.Drawing.Size(159, 20);
+            this.TbForce.TabIndex = 1;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(228, 31);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(15, 13);
+            this.label28.TabIndex = 2;
+            this.label28.Text = "N";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 61);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(219, 35);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Run Analysis";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(23, 102);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(219, 35);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Wrtie Stress to csv";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(23, 143);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(219, 35);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Wrtie Limit to csv";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(23, 184);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(219, 35);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Wrtie Safety Factor to csv";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(23, 225);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(219, 35);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Wrtie Designguide to csv";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(23, 266);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(219, 35);
+            this.button6.TabIndex = 8;
+            this.button6.Text = "Wrtie Structure to csv";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(115, 431);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(334, 79);
+            this.button7.TabIndex = 12;
+            this.button7.Text = "Reset";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 584);
+            this.ClientSize = new System.Drawing.Size(473, 400);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -525,12 +787,18 @@
             this.groupBox1.PerformLayout();
             this.TPTop.ResumeLayout(false);
             this.TPTop.PerformLayout();
+            this.TPBot.ResumeLayout(false);
+            this.TPBot.PerformLayout();
             this.TPOver.ResumeLayout(false);
             this.TPOver.PerformLayout();
+            this.TPAnal.ResumeLayout(false);
+            this.TPAnal.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -580,6 +848,29 @@
         private System.Windows.Forms.ComboBox CBStrTopRemove;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button BtStrBotAdd;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox CBStrBotAdd2;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox CBStrBotAdd1;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ListView LVStrBot;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox TbForce;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button7;
     }
 }
 
