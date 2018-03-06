@@ -12,11 +12,21 @@ namespace gridanalysis
 {
     public partial class Form1 : Form
     {
-        Analysis anal = new Analysis();
+        AnalysisRefactored refanal = new AnalysisRefactored();
         public Form1()
         {
             InitializeComponent();
+            refanal.AddRib(500);
+            refanal.AddRib(200);
+            foreach (int item in refanal.ribs)
+            {
+                if(item != 0||item != 1500)
+                    listView1.Items.Add(Convert.ToString(item));
+            }
         }
+
+        #region old
+        Analysis anal = new Analysis();
 
         private void label9_Click(object sender, EventArgs e)
         {
@@ -25,7 +35,7 @@ namespace gridanalysis
 
         private void button1_Click(object sender, EventArgs e)
         {
-            anal.Addnode(new int[] { Convert.ToInt32(tbi.Text), Convert.ToInt32(tbj.Text) },Convert.ToInt32(tbend.Text));
+            anal.Addnode(new int[] { Convert.ToInt32(tbi.Text), Convert.ToInt32(tbj.Text) }, Convert.ToInt32(tbend.Text));
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -84,5 +94,6 @@ namespace gridanalysis
         {
 
         }
+        #endregion
     }
 }

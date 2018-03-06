@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tbend = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -57,9 +60,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbend = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -82,6 +83,31 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(196, 213);
             this.panel1.TabIndex = 0;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(170, 106);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(23, 13);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "mm";
+            // 
+            // tbend
+            // 
+            this.tbend.Location = new System.Drawing.Point(102, 103);
+            this.tbend.Name = "tbend";
+            this.tbend.Size = new System.Drawing.Size(62, 20);
+            this.tbend.TabIndex = 10;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(4, 106);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(77, 13);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "End of Stringer";
             // 
             // button4
             // 
@@ -336,36 +362,21 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
-            // label12
+            // listView1
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(170, 106);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(23, 13);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "mm";
-            // 
-            // tbend
-            // 
-            this.tbend.Location = new System.Drawing.Point(102, 103);
-            this.tbend.Name = "tbend";
-            this.tbend.Size = new System.Drawing.Size(62, 20);
-            this.tbend.TabIndex = 10;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 106);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(77, 13);
-            this.label13.TabIndex = 9;
-            this.label13.Text = "End of Stringer";
+            this.listView1.GridLines = true;
+            this.listView1.Location = new System.Drawing.Point(398, 16);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(66, 388);
+            this.listView1.TabIndex = 16;
+            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 420);
+            this.ClientSize = new System.Drawing.Size(786, 420);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
@@ -422,6 +433,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbend;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ListView listView1;
     }
 }
 
