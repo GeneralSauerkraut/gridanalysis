@@ -28,7 +28,7 @@ namespace gridanalysis
          * */
 
         /**
-         * First all the relevant arrays are defined
+         * These are the characteristic defining variables for the Wingbox
          * */
         static int sizex = 1500;
         static int sizey = 400;
@@ -39,6 +39,21 @@ namespace gridanalysis
         private List<Stringer> topstringers;
         private List<Stringer> botstringers;
         private List<int> ribs;
+
+        /**
+         * These are all of the calculated Arrays
+         * */
+        private double[,] ab;
+        private double[,] kc;
+        private double[,] sigma_buckling;
+
+        private double[,] Inertia;
+        private double[,] offset_from_neutral_axis;
+        private double[,] Sigma_compression;
+
+        //Material specific Properties
+        private static int e_modulus = 72400; //MPa
+        private static double thickness = 0.8; //mm
 
         public AnalysisRefactored()
         {
@@ -236,6 +251,183 @@ namespace gridanalysis
                 for (int i = item.start; i <= item.end; i++)
                     n_of_botstringers[i]++;
             }
+        }
+        #endregion
+
+        #region Calculation Management for Multithreading
+        #endregion
+
+        #region Calculations
+        //TODO: There is a way more efficient way to solve this
+        private double[,] GetAB()
+        {
+            /**<summary>
+             * This Function returns the quotient of the disatance between ribs and the distance between the stringers
+             * </summary>*/
+            double[,] data = new double[sizey + 1, sizex + 1];
+
+            //get the real ab values
+            for (int i = 0; i < data.GetLength(0); i++)
+                for (int j = 0; j < data.GetLength(1); j++)
+                    data[i, j] = GetHorizontalSpacing(i, j) / GetVerticalSpacing(i, j);
+
+            /**<remarks>
+             * The obtained data is pretty but not very useful
+             * Due to the slanted nature of the Wingbox we use the value left of the 
+             * elemnt if we are in the slanted part.
+             * We also set the truncated part and all "walls" of the wingbox to 0
+             * </remarks>*/
+
+            for(int i = 0; i < data.GetLength(0); i++)
+            {
+                for(int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (j > 1268)
+                        data[i, j] = data[i, j - 1];
+                    if (i == 0 || i == sizey || j == 0 || j > 1269 + i * Math.Tan(Math.PI / 6))
+                        data[i, j] = 0;
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetKc()
+        {
+            /**<summary>
+             * In this function we get the relevant Coefficient of buckling
+             * Walls and truncated Parts are still left 0
+             * </summary>*/
+            double[,] data = new double[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (ab[i, j] != 0)
+                        data[i, j] = GetKcValue(ab[i, j]);
+                    else
+                        data[i, j] = 0;
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetSigmaBuckle()
+        {
+            /**<summary>
+             * In this functiopn the needed stress for buckling will be calculated
+             * Walls and truncated Parts are still set to 0
+             * </summary>*/
+            double[,] data = new double[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (ab[i, j] != 0)
+                    {
+                        data[i, j] = kc[i, j] * e_modulus * Math.Pow(thickness / GetVerticalSpacing(i, j), 2);
+                    }
+                }
+            }
+
+            return data;
+        }
+        #endregion
+
+        #region Assisting Functions
+        private int GetVerticalSpacing(int vert, int hor)
+        {
+            /**<remarks>
+             * I didnt add an Exceptiopn for reaching the end of the array,
+             * because when in use the outermost cells wil never be false.
+             * </remarks>*/
+            int count = 0;
+            int pos = vert;
+            
+            //First we go up with our checker
+            while(!walls[pos,hor])
+            {
+                count++;
+                pos--;
+            }
+
+            //Then we go down with it(Because You always return the favour ;)
+            pos = vert;
+            while(!walls[pos,hor])
+            {
+                count++;
+                pos++;
+            }
+
+            if (count != 0) return count;
+            else return 1;
+        }
+
+        private int GetHorizontalSpacing(int vert, int hor)
+        {
+            /**<remarks>
+             * I didnt add an Exceptiopn for reaching the end of the array,
+             * because when in use the outermost cells wil never be false.
+             * </remarks>*/
+            int count = 0;
+            int pos = hor;
+
+            //First we go up with our checker
+            while (!walls[vert, pos])
+            {
+                count++;
+                pos--;
+            }
+
+            //Then we go down with it(Because You always return the favour ;)
+            pos = hor;
+            while (!walls[vert, pos])
+            {
+                count++;
+                pos++;
+            }
+
+            if (count != 0) return count;
+            else return 1;
+        }
+
+        private double GetKcValue(double nab)
+        {
+            /**<returns>
+             * To get the relevent Coefficient of buckling(Kc) data from the
+             * Reader is used.
+             * The Graph is approxiamted by the following function
+             * The Function is first order continuous
+             * kc = {   ab under 0.4:   kc = 7
+             *          ab under 0.75:  kc = -2*(ab-0.4)+7
+             *          ab above 0.75:  kc = 6.3}
+             * </returns>*/
+
+            if (nab < 0.4)
+                return 7;
+            else if (nab < 0.75)
+                return -2 * (nab - 0.4) + 7;
+            else
+                return 6.3;
+        }
+
+        private double[,] Interpolatedsmoothing(double[,] data)
+        {
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if(data[i,j]==0&& j < 1269 + i * Math.Tan(Math.PI / 6))
+                    {
+
+                    }
+                }
+            }
+
+            return data;
         }
         #endregion
 
