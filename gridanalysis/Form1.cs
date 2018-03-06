@@ -144,10 +144,5 @@ namespace gridanalysis
         {
             ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
         }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            ArrayDumper.DumpArray(Analysis.ReturnDebug(), "design");
-        }
     }
 }

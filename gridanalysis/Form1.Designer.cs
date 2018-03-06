@@ -95,7 +95,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TPRibs.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -299,7 +298,6 @@
             // 
             // TPAnal
             // 
-            this.TPAnal.Controls.Add(this.button8);
             this.TPAnal.Controls.Add(this.button6);
             this.TPAnal.Controls.Add(this.button5);
             this.TPAnal.Controls.Add(this.button4);
@@ -691,6 +689,7 @@
             this.TbForce.Name = "TbForce";
             this.TbForce.Size = new System.Drawing.Size(159, 20);
             this.TbForce.TabIndex = 1;
+            this.TbForce.Text = "2500";
             // 
             // label28
             // 
@@ -770,16 +769,6 @@
             this.button7.Text = "Reset";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(303, 44);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(113, 180);
-            this.button8.TabIndex = 9;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // Form1
             // 
@@ -883,7 +872,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
     }
 }
 
