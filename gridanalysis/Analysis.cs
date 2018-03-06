@@ -54,6 +54,10 @@ namespace gridanalysis
             {
                 throw new Exception("Stringer cant end before he begun");
             }
+            if(end > 1500)
+            {
+                end = 1500;
+            }
 
             for (int i = 0; i < walls.GetLength(0); i++)
             {
@@ -104,10 +108,21 @@ namespace gridanalysis
                     ab[i, j] = HoriSpacing(new double[] { i, j }) / VertSpacing(new double[] { i, j });
                     kc[i, j] = Getkc(ab[i, j]);
                     sigmabckl[i, j] = 72400 * kc[i, j] * Math.Pow(0.8 / VertSpacing(new double[] { i, j }),2);
-                    if (sigmabckl[i, j] > 120)
-                        sigmabckl[i, j] = 120;
+                    if (sigmabckl[i, j] > 110)
+                        sigmabckl[i, j] = 110;
                     else if (Math.Abs(sigmabckl[i, j] - 0.252) < 0.01)
                         sigmabckl[i, j] = 0;
+                }
+            }
+
+            for (int i = 0; i < ab.GetLength(0); i++)
+            {
+                for (int j = 0; j < ab.GetLength(1); j++)
+                {
+                    if(j>1269&& j < 1269 + i * Math.Tan(Math.PI / 6))
+                    {
+                        sigmabckl[i, j] = sigmabckl[i, j - 1];
+                    }
                 }
             }
         }
