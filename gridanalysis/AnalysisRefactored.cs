@@ -27,6 +27,7 @@ namespace gridanalysis
          * </summary>
          * */
 
+        #region Variables
         /**
          * These are the characteristic defining variables for the Wingbox
          * */
@@ -35,6 +36,7 @@ namespace gridanalysis
 
         private bool[,] walls = new bool[sizey + 1, sizex + 1];
         private int[] n_of_botstringers;
+        private int[] n_of_topstringers;
 
         private List<Stringer> topstringers;
         private List<Stringer> botstringers;
@@ -51,9 +53,13 @@ namespace gridanalysis
         private double[,] offset_from_neutral_axis;
         private double[,] Sigma_compression;
 
+        private double[,] Sfactor;
+        private int[,] designguide;
+
         //Material specific Properties
         private static int e_modulus = 72400; //MPa
         private static double thickness = 0.8; //mm
+        #endregion
 
         public AnalysisRefactored()
         {
@@ -96,6 +102,7 @@ namespace gridanalysis
         {
             topstringers = new List<Stringer>();
             if(recal) RecalculateWalls();
+            RecalculateTopStringers();
         }
 
         public void AddTopStringer(int verticalpos, int start, int end)
@@ -123,6 +130,7 @@ namespace gridanalysis
             }
 
             RecalculateWalls();
+            RecalculateTopStringers();
         }
 
         public void RemoveTopStringer(int verticalpos, int start, int end)
@@ -147,6 +155,39 @@ namespace gridanalysis
             }
 
             RecalculateWalls();
+            RecalculateTopStringers();
+        }
+
+        private void RecalculateTopStringers()
+        {
+            n_of_topstringers = new int[sizex + 1];
+
+            for(int i = 0; i<walls.GetLength(1);i++)
+            {
+                /**<remarks>
+                 * First we run through the 2d array to count the amount of stringers
+                 * if the index is higher or equal to 1269 the previous amount of stringers
+                 * If there is a rib present it will be later filled by the value of its right
+                 * </remarks>*/
+                if (i < 1269)
+                {
+                    int counter = 0;
+                    for (int j = 0; j < walls.GetLength(0); j++)
+                        if (walls[j, i]) counter++;
+                    if (counter < 200)
+                        n_of_topstringers[i] = counter - 2;
+                    else
+                        n_of_topstringers[i] = 0;
+                }
+                else
+                    n_of_topstringers[i] = n_of_topstringers[i - 1];
+            }
+
+            for (int i = 0; i<n_of_topstringers.Length; i++)
+            {
+                if (n_of_topstringers[i] == 0)
+                    n_of_topstringers[i] = n_of_topstringers[i + 1];
+            }
         }
         #endregion
 
@@ -255,6 +296,35 @@ namespace gridanalysis
         #endregion
 
         #region Calculation Management for Multithreading
+        //TODO: Multithreading
+        public void Calculate(double force)
+        {
+            RecalculateWalls();
+            RecalculateBotStringers();
+            RecalculateTopStringers();
+
+            //Left tree
+            ab = GetAB();
+            kc = GetKc();
+            sigma_buckling = GetSigmaBuckle();
+            //interpolation
+            ab = Interpolatedsmoothing(ab);
+            kc = Interpolatedsmoothing(kc);
+            sigma_buckling = Interpolatedsmoothing(sigma_buckling);
+
+            //right tree
+            Inertia = GetInertia();
+            offset_from_neutral_axis = GetOffset();
+            Sigma_compression = GetStress(force);
+            Sfactor = GetSfactor();
+            designguide = GetDesignGuide();
+
+            //truncation
+            sigma_buckling = TruncateData(sigma_buckling);
+            Sigma_compression = TruncateData(Sigma_compression);
+            Sfactor = TruncateData(Sfactor);
+            designguide = TruncateData(designguide);
+        }
         #endregion
 
         #region Calculations
@@ -330,6 +400,96 @@ namespace gridanalysis
                     {
                         data[i, j] = kc[i, j] * e_modulus * Math.Pow(thickness / GetVerticalSpacing(i, j), 2);
                     }
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetInertia()
+        {
+            double[,] data = new double[sizey + 1, sizex + 1];
+            Parser parser = new Parser();
+
+            for(int i = 0; i<data.GetLength(0);i++)
+            {
+                for(int j = 0; j<data.GetLength(1);j++)
+                {
+                    data[i, j] = parser.inertia[n_of_topstringers[j], n_of_botstringers[j]];
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetOffset()
+        {
+            double[,] data = new double[sizey + 1, sizex + 1];
+            Parser parser = new Parser();
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    data[i, j] = parser.y[n_of_topstringers[j], n_of_botstringers[j]];
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetStress(double force)
+        {
+            double[,] data = new double[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    data[i, j] = force * j / 1000 * offset_from_neutral_axis[i, j] / Inertia[i, j];
+                    if (j > 1268) data[i, j] *= 3 / 4;
+                }
+            }
+
+            return data;
+        }
+
+        private double[,] GetSfactor()
+        {
+            double[,] data = new double[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if(Sigma_compression[i,j]!=0)
+                    {
+                        data[i, j] = sigma_buckling[i, j] / Sigma_compression[i, j];
+                    }
+                    else
+                    {
+                        data[i, j] = 0;
+                    }
+                }
+            }
+
+            return data;
+        }
+
+        private int[,] GetDesignGuide()
+        {
+            int[,] data = new int[sizey + 1, sizex + 1];
+
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (Sfactor[i, j] < 1)
+                        data[i, j] = 0;
+                    else if (Sfactor[i,j] < 2.5)
+                        data[i, j] = 1;
+                    else
+                        data[i, j] = 2;
                 }
             }
 
@@ -422,11 +582,73 @@ namespace gridanalysis
                 {
                     if(data[i,j]==0&& j < 1269 + i * Math.Tan(Math.PI / 6))
                     {
+                        /**<remarks>
+                         * A linear Interpolation method is used. the field taken for this are
+                         * positioned in the Form of X with the intersection representing the to interpolating cell
+                         * </remarks>*/
+                        double[] tmp = new double[] { 0, 0, 0, 0 };
 
+                        if (i - 1 < data.GetLength(0) && j + 1 < data.GetLength(1))
+                            tmp[0] = data[i - 1, j + 1];
+
+                        if (i - 1 < data.GetLength(0) && j - 1 < data.GetLength(1))
+                            tmp[1] = data[i - 1, j - 1];
+
+                        if (i + 1 < data.GetLength(0) && j - 1 < data.GetLength(1))
+                            tmp[2] = data[i + 1, j - 1];
+
+                        if (i + 1 < data.GetLength(0) && j + 1 < data.GetLength(1))
+                            tmp[3] = data[i + 1, j + 1];
+
+                        double sum = 0;
+                        int counter = 0;
+
+                        for (int k = 0; k<tmp.Length; k++)
+                        {
+                            if(tmp[k]!=0)
+                            {
+                                sum += tmp[k];
+                                counter++;
+                            }
+                        }
+
+                        data[i, j] = sum / counter;
                     }
                 }
             }
 
+            return data;
+        }
+
+        private double[,] TruncateData(double[,] data)
+        {
+            /**<summary>
+             * This function truncates the corner of data for inspection
+             * </summary>*/
+            for(int i = 0; i<data.GetLength(0);i++)
+            {
+                for(int j = 0; j<data.GetLength(1);j++)
+                {
+                    if (j > 1269 + i * Math.Tan(Math.PI / 6))
+                        data[i, j] = 0;
+                }
+            }
+            return data;
+        }
+
+        private int[,] TruncateData(int[,] data)
+        {
+            /**<summary>
+             * This function truncates the corner of data for inspection
+             * </summary>*/
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    if (j > 1269 + i * Math.Tan(Math.PI / 6))
+                        data[i, j] = 0;
+                }
+            }
             return data;
         }
         #endregion

@@ -18,7 +18,7 @@ namespace gridanalysis
             InitializeComponent();
             refanal.AddRib(500);
             refanal.AddRib(200);
-            foreach (int item in refanal.ribs)
+            foreach (int item in refanal.ReturnRibs())
             {
                 if(item != 0||item != 1500)
                     listView1.Items.Add(Convert.ToString(item));
