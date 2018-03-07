@@ -123,26 +123,31 @@ namespace gridanalysis
         private void button2_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnStress(), "stress");
+            PictureDrawer drawer = new PictureDrawer(Analysis.ReturnStress(), "stress");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnBckling(), "bckl");
+            PictureDrawer drawer = new PictureDrawer(Analysis.ReturnBckling(), "bckl");
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnSfactor(), "sfactor");
+            PictureDrawer drawer = new PictureDrawer(Analysis.ReturnSfactor(), "sfactor");
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnDesignGuide(), "design");
+            PictureDrawer drawer = new PictureDrawer(Analysis.ReturnDesignGuide(), "design");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
+            PictureDrawer drawer = new PictureDrawer(Analysis.ReturnWalls(), "walls");
         }
     }
 }
