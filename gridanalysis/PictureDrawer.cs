@@ -10,30 +10,28 @@ namespace gridanalysis
 {
     class PictureDrawer
     {
-        private double[,] data;
-        private string file;
 
-        public PictureDrawer(double[,] over, string nname)
+        public static void Draw(double[,] over, string nname)
         {
-            data = over;
-            file = @"C:\Ginger\" + nname + ".png";
+            double[,] data = over;
+            string file = @"C:\Ginger\" + nname + ".png";
 
-            GeneratePicture();
+            GeneratePicture(data,file);
         }
 
-        public PictureDrawer(int[,] over, string nname)
+        public static void Draw(int[,] over, string nname)
         {
-            data = new double[over.GetLength(0), over.GetLength(1)];
+            double[,] data = new double[over.GetLength(0), over.GetLength(1)];
             for (int i = 0; i < over.GetLength(0); i++)
                 for (int j = 0; j < over.GetLength(1); j++)
                     data[i, j] = Convert.ToDouble(over[i, j]);
 
-            file = @"C:\Ginger\" + nname + ".png";
+            string file = @"C:\Ginger\" + nname + ".png";
 
-            GeneratePicture();
+            GeneratePicture(data,file);
         }
 
-        private void GeneratePicture()
+        private static void GeneratePicture(double[,] data, string name)
         {
             Bitmap bitmap = new Bitmap(1501, 401);
             Color[,] color = new Color[data.GetLength(0), data.GetLength(1)];
@@ -69,10 +67,10 @@ namespace gridanalysis
                 }
             }
 
-            SavePicture(bitmap);
+            SavePicture(bitmap,name);
         }
 
-        private Color GetColor(double rangeStart /*Complete Red*/, double rangeEnd /*Complete Green*/, double actualValue)
+        private static Color GetColor(double rangeStart /*Complete Red*/, double rangeEnd /*Complete Green*/, double actualValue)
         {
             double max = rangeEnd - rangeStart; // make the scale start from 0
             double value = actualValue - rangeStart; // adjust the value accordingly
@@ -83,7 +81,7 @@ namespace gridanalysis
             return Color.FromArgb(Convert.ToInt32(red), Convert.ToInt32(green), 0);
         }
 
-        public void SavePicture(Bitmap bit)
+        public static void SavePicture(Bitmap bit, string file)
         {
             bit.Save(file, ImageFormat.Png);
         }
