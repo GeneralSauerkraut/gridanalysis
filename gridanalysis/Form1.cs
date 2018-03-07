@@ -118,6 +118,9 @@ namespace gridanalysis
         private void button7_Click(object sender, EventArgs e)
         {
             Analysis = new AnalysisRefactored();
+            UpdateRibs();
+            UpdateStrBot();
+            UpdateTopStr();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -145,6 +148,12 @@ namespace gridanalysis
         }
 
         private void button6_Click(object sender, EventArgs e)
+        {
+            ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
+            PictureDrawer.Draw(Analysis.ReturnWalls(), "walls");
+        }
+
+        private void button8_Click(object sender, EventArgs e)
         {
             ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
             PictureDrawer.Draw(Analysis.ReturnWalls(), "walls");

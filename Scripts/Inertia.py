@@ -49,6 +49,6 @@ for i in range(0,size):
 		spacing[i, j] = 0.4/(i+1)
 
 np.savetxt('axis.csv', axis, delimiter=';')
-np.savetxt('inertia.csv', inertia, delimiter=';')
-np.savetxt('invaxis.csv', invaxis, delimiter=';')
+np.savetxt('inertia.csv', inertia, delimiter=',')
+np.savetxt('invaxis.csv', invaxis, delimiter=',')
 np.savetxt('spacing.csv', spacing, delimiter=';')

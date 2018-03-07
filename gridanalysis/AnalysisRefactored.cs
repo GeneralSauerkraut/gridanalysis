@@ -579,12 +579,32 @@ namespace gridanalysis
              *          ab above 0.75:  kc = 6.3}
              * </returns>*/
 
-            if (nab < 0.4)
-                return 7;
-            else if (nab < 0.75)
-                return -2 * (nab - 0.4) + 7;
-            else
-                return 6.3;
+            //if (nab < 0.4)
+            //    return 7;
+            //else if (nab < 0.75)
+            //    return -2 * (nab - 0.4) + 7;
+            //else
+            //    return 6.3;
+
+            if (nab < 0.9) return 15;
+            if (nab >= 5.4) return 3.6;
+            
+            double[] ab = new double[]{ 0.9, 1, 1.4, 2.1, 2.6, 3.4, 4, 5.4};
+            double[] kc = new double[] { 7, 6, 5, 4.2, 4, 3.8, 3.7, 3.6 };
+
+            //first find the closest two values
+            int indexsmalleras = ab.Length - 1;
+            int indexbiggeras = 0;
+
+            while (nab > ab[indexbiggeras]) indexbiggeras++;
+            while (nab < ab[indexsmalleras]) indexsmalleras--;
+            indexsmalleras++;
+            indexbiggeras--;
+
+            double slope = kc[indexsmalleras] - kc[indexbiggeras] / (ab[indexsmalleras] - ab[indexbiggeras]);
+            double delta = nab - ab[indexbiggeras];
+            return kc[indexbiggeras] + slope * delta;
+
         }
 
         private double[,] Interpolatedsmoothing(double[,] data)
