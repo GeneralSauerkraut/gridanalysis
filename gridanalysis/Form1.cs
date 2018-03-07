@@ -158,5 +158,18 @@ namespace gridanalysis
             ArrayDumper.DumpArray(Analysis.ReturnWalls(), "walls");
             PictureDrawer.Draw(Analysis.ReturnWalls(), "walls");
         }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+            Saver.Save(Analysis.ReturnRibs(), Analysis.ReturnTopStringers(), Analysis.ReturnBotStringers());
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Analysis = Saver.LoadTemp();
+            UpdateRibs();
+            UpdateStrBot();
+            UpdateTopStr();
+        }
     }
 }
