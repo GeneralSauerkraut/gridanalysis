@@ -47,7 +47,7 @@ namespace gridanalysis
                 {
                     if (data[i, j] > max)
                         max = data[i, j];
-                    if (data[i, j] < min && data[i, j] != -1)
+                    if (data[i, j] < min && data[i, j] >= 0)
                         min = data[i, j];
                 }
             }
@@ -56,7 +56,7 @@ namespace gridanalysis
             {
                 for (int j = 0; j < data.GetLength(1); j++)
                 {
-                    if(data[i,j]==-1)
+                    if(data[i,j]<0)
                     {
                         color[i, j] = Color.FromArgb(0, 0, 255);
                     }
@@ -64,13 +64,15 @@ namespace gridanalysis
                     {
                         color[i, j] = GetColor(max, min, data[i, j]);
                     }
+
+                    bitmap.SetPixel(j, i, color[i, j]);
                 }
             }
 
             SavePicture(bitmap);
         }
 
-        Color GetColor(double rangeStart /*Complete Red*/, double rangeEnd /*Complete Green*/, double actualValue)
+        private Color GetColor(double rangeStart /*Complete Red*/, double rangeEnd /*Complete Green*/, double actualValue)
         {
             double max = rangeEnd - rangeStart; // make the scale start from 0
             double value = actualValue - rangeStart; // adjust the value accordingly
@@ -78,7 +80,7 @@ namespace gridanalysis
             double red = (255 * value) / max; // calculate green (the closer the value is to max, the greener it gets)
             double green = 255 - red; // set red as inverse of green
 
-            return Color.FromArgb((Byte)red, (Byte)green, (Byte)0);
+            return Color.FromArgb(Convert.ToInt32(red), Convert.ToInt32(green), 0);
         }
 
         public void SavePicture(Bitmap bit)
