@@ -32,7 +32,7 @@ namespace gridanalysis
 
         public static AnalysisRefactored LoadTemp()
         {
-            AnalysisRefactored anal = new AnalysisRefactored();
+            AnalysisRefactored retAnalysis = new AnalysisRefactored();
 
             String[] Lines = File.ReadAllLines(@"C:\Ginger\temp.dsf");
 
@@ -47,7 +47,7 @@ namespace gridanalysis
                 {
                     string temp = Lines[i];
                     temp = temp.Substring(index + 1);
-                    anal.AddRib(Convert.ToInt32(temp));
+                    retAnalysis.AddRib(Convert.ToInt32(temp));
                 }
 
                 else if(input=="T"||input=="t")
@@ -55,19 +55,19 @@ namespace gridanalysis
                     string temp = Lines[i];
                     temp = temp.Substring(index + 1);
                     string[] chars = temp.Split(',');
-                    anal.AddTopStringer(Convert.ToInt32(chars[0]), Convert.ToInt32(chars[1]), Convert.ToInt32(chars[2]));
+                    retAnalysis.AddTopStringer(Convert.ToInt32(chars[0]), Convert.ToInt32(chars[1]), Convert.ToInt32(chars[2]));
                 }
                 else if(input=="B"||input=="b")
                 {
                     string temp = Lines[i];
                     temp = temp.Substring(index + 1);
                     string[] chars = temp.Split(',');
-                    anal.AddBotStringer(Convert.ToInt32(chars[0]), Convert.ToInt32(chars[1]));
+                    retAnalysis.AddBotStringer(Convert.ToInt32(chars[0]), Convert.ToInt32(chars[1]));
                 }
 
             }
 
-            return anal;
+            return retAnalysis;
         }
     }
 }
