@@ -8,7 +8,7 @@ using System.Drawing.Imaging;
 
 namespace gridanalysis
 {
-    class PictureDrawer
+    static class PictureDrawer
     {
 
         public static void Draw(double[,] over, string nname)

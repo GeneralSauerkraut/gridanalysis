@@ -555,7 +555,7 @@ namespace gridanalysis
                 pos--;
             }
 
-            //Then we go down with it(Because You always return the favour ;)
+            //Then we go down
             pos = hor;
             while (!walls[vert, pos])
             {
@@ -713,7 +713,7 @@ namespace gridanalysis
 
         public double[,] ReturnStress()
         {
-            return TruncateData(Sigma_compression);
+            return TruncateData(Interpolatedsmoothing(Sigma_compression));
         }
 
         public double[,] ReturnSfactor()
