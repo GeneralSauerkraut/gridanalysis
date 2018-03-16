@@ -713,7 +713,7 @@ namespace gridanalysis
 
         public double[,] ReturnStress()
         {
-            return TruncateData(Interpolatedsmoothing(Sigma_compression));
+            return Interpolatedsmoothing(TruncateData(Sigma_compression));
         }
 
         public double[,] ReturnSfactor()
